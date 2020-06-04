@@ -2,12 +2,17 @@
 import fs from 'fs';
 import path from 'path';
 
-export default (file1, file2) => {
-  const readJson1 = fs.readFileSync(path.resolve(process.cwd(), file1));
-  const readJson2 = fs.readFileSync(path.resolve(process.cwd(), file2));
+//const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+//const readFile = (filename) => fs.readFile(getFixturePath(filename), 'utf-8');
 
-  const obj1 = JSON.parse(readJson1);
-  const obj2 = JSON.parse(readJson2);
+export default (file1, file2) => {
+  //const readJson1 = await readFile(file1);
+  //const readJson2 = await readFile(file2);
+  //const readJson1 = fs.readFileSync(path.resolve(process.cwd(), file1));
+  //const readJson2 = fs.readFileSync(path.resolve(process.cwd(), file2));
+
+  const obj1 = JSON.parse(file1);
+  const obj2 = JSON.parse(file2);
 
   const key1 = Object.keys(obj1);
   const key2 = Object.keys(obj2);
