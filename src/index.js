@@ -8,8 +8,8 @@ const readFile = (filename) => fs.readFileSync(path.resolve(process.cwd(), filen
 export default (file1, file2) => {
   const getData1 = readFile(file1);
   const getData2 = readFile(file2);
-  const obj1 = runParser(getData1);
-  const obj2 = runParser(getData2);
+  const obj1 = runParser(getData1, path.extname(file1));
+  const obj2 = runParser(getData2, path.extname(file2));
 
   const key1 = Object.keys(obj1);
   const key2 = Object.keys(obj2);
