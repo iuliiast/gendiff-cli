@@ -2,10 +2,11 @@
 import fs from 'fs';
 import path from 'path';
 import runParser from './parsers';
+import formatter from './stylish';
 
 const readFile = (filename) => fs.readFileSync(path.resolve(process.cwd(), filename), 'utf-8');
 
-export default (file1, file2) => {
+const genDiff = (file1, file2) => {
   const getData1 = readFile(file1);
   const getData2 = readFile(file2);
   const obj1 = runParser(getData1, path.extname(file1));
@@ -17,21 +18,24 @@ export default (file1, file2) => {
 
   const result = [];
   for (const key of keys) {
-    if (obj1[key] === obj2[key]) {
-      result.push([' ', key, ': ', obj1[key]]);
-    } else if (obj2.hasOwnProperty(key) !== true) {
-      result.push(['-', key, ': ', obj1[key]]);
-    } else if (obj1.hasOwnProperty(key) !== true) {
-      result.push(['+', key, ': ', obj2[key]]);
-    } else if (obj2.hasOwnProperty(key) === true
-        && obj1[key] !== obj2[key]) {
-      result.push(['+', key, ': ', obj2[key]]);
-      result.push(['-', key, ': ', obj1[key]]);
+    if (file1[key] === file2[key]) {
+      result.push({ name: key, value: file1[key], type: 'unchanged' });
+    } else if ((typeof file2[key] !== 'object' && typeof file1[key] !== 'object') && (file2.hasOwnProperty(key) && file1.hasOwnProperty(key))) {
+      result.push({ name: key, value: file2[key], type: 'updated' });
+      result.push({ name: key, value: file1[key], type: 'removed' });
+    } else if (((typeof file2[key] === typeof file1[key]) !== true)
+    && (file2.hasOwnProperty(key) && file1.hasOwnProperty(key))) {
+      result.push({ name: key, value: file2[key], type: 'updated' });
+      result.push({ name: key, value: file1[key], type: 'removed' });
+    } else if (file2.hasOwnProperty(key) !== true) {
+      result.push({ name: key, value: file1[key], type: 'removed' });
+    } else if (file1.hasOwnProperty(key) !== true) {
+      result.push({ name: key, value: file2[key], type: 'added' });
+    } else if (typeof file1[key] && typeof file2[key] === 'object') {
+      result.push({ name: key, value: gendiff(file1[key], file2[key]), type: 'parent' });
     }
   }
-  const arrToStr1 = result.map((el) => el.join(' '));
-  const arrToStr2 = arrToStr1.join('\n');
-  const final = `{\n${arrToStr2}\n}`;
-  console.log(final);
-  return final;
+  return formatter(result);
 };
+
+export default genDiff;
