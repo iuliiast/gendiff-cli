@@ -21,12 +21,14 @@ const genDiff = (file1, file2) => {
     if (file1[key] === file2[key]) {
       result.push({ name: key, value: file1[key], type: 'unchanged' });
     } else if ((typeof file2[key] !== 'object' && typeof file1[key] !== 'object') && (file2.hasOwnProperty(key) && file1.hasOwnProperty(key))) {
-      result.push({ name: key, value: file2[key], type: 'updated' });
-      result.push({ name: key, value: file1[key], type: 'removed' });
+      result.push({
+        name: key, addedValue: file2[key], removedValue: file1[key], type: 'updated',
+      });
     } else if (((typeof file2[key] === typeof file1[key]) !== true)
     && (file2.hasOwnProperty(key) && file1.hasOwnProperty(key))) {
-      result.push({ name: key, value: file2[key], type: 'updated' });
-      result.push({ name: key, value: file1[key], type: 'removed' });
+      result.push({
+        name: key, addedValue: file2[key], removedValue: file1[key], type: 'updated',
+      });
     } else if (file2.hasOwnProperty(key) !== true) {
       result.push({ name: key, value: file1[key], type: 'removed' });
     } else if (file1.hasOwnProperty(key) !== true) {
@@ -35,6 +37,7 @@ const genDiff = (file1, file2) => {
       result.push({ name: key, value: gendiff(file1[key], file2[key]), type: 'parent' });
     }
   }
+  console.log(formatter(result));
   return formatter(result);
 };
 
