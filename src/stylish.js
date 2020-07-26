@@ -1,41 +1,38 @@
+/* eslint-disable no-restricted-syntax */
 const formatter = (file) => {
   let result = '';
 
-  const checkValue = (obj) => {
-    if (typeof obj.value === 'object') {
-      const entries = (Object.entries(obj.value)).flat();
-      const createFormWithObj = `{\n ${entries[0]} : ${entries[1]} \n }`;
-      return createFormWithObj;
+  const formatValue = (value) => {
+    let acc = '';
+    if (typeof value !== 'object') {
+      console.log(value);
+      acc += value;
+    } else {
+      const values = Object.values(value);
+      console.log(values);
+      formatValue(values);
     }
-    return obj.value;
-  };
-
-  const operator = (obj) => {
-    let str = '';
-    if (obj.type === 'removed') {
-      str += `\n - ${obj.name} : ${checkValue(obj)}`;
-    } else if (obj.type === 'added') {
-      str += `\n + ${obj.name} : ${checkValue(obj)}`;
-    } else if (obj.type === 'unchanged') {
-      str += `\n   ${obj.name} : ${checkValue(obj)}`;
-    } else if (obj.type === 'updated') {
-      str += `\n + ${obj.name} : ${obj.addedValue}`;
-      str += `\n - ${obj.name} : ${obj.removedValue}`;
-    }
-    return str;
+    return acc;
   };
 
   for (const obj of file) {
+
     if (obj.type === 'parent') {
       const getChildren = formatter(obj.value);
       const objName = `\n ${obj.name}: ${getChildren} \n}`;
       result += objName;
-    } else {
-      const createForm = `${operator(obj)}`;
-      result += createForm;
+    } else if (obj.type === 'removed') {
+      result += `\n - ${obj.name} : ${formatValue(obj.value)}`;
+    } else if (obj.type === 'added') {
+      result += `\n + ${obj.name} : ${formatValue(obj.value)}`;
+    } else if (obj.type === 'unchanged') {
+      result += `\n   ${obj.name} : ${formatValue(obj.value)}`;
+    } else if (obj.type === 'updated') {
+      result += `\n + ${obj.name} : ${formatValue(obj.addedValue)}`;
+      result += `\n - ${obj.name} : ${formatValue(obj.removedValue)}`;
     }
   }
-  const fin = `{\n ${result} \n}`;
-  return fin;
+  const getWrapper = `{\n ${result} \n}`;
+  return getWrapper;
 };
 export default formatter;
