@@ -4,13 +4,11 @@ const formatter = (file) => {
 
   const formatValue = (value) => {
     let acc = '';
-    if (typeof value !== 'object') {
-      console.log(value);
-      acc += value;
+    if (typeof value === 'object') {
+      const entries = Object.entries(value).flat();
+      acc += `{\n ${entries[0]} : ${formatValue(entries[1])} \n}`;
     } else {
-      const values = Object.values(value);
-      console.log(values);
-      formatValue(values);
+      acc += value;
     }
     return acc;
   };
