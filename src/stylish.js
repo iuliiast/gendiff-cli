@@ -1,36 +1,33 @@
-/* eslint-disable no-restricted-syntax */
-const formatter = (file) => {
-  let result = '';
-
+const formatter = (tree) => {
   const formatValue = (value) => {
     let acc = '';
     if (typeof value === 'object') {
       const entries = Object.entries(value).flat();
-      acc += `{\n ${entries[0]} : ${formatValue(entries[1])} \n}`;
+      acc += `{\n${entries[0]}:${formatValue(entries[1])}\n}`;
     } else {
       acc += value;
     }
     return acc;
   };
-
-  for (const obj of file) {
-
+  const formatType = (obj) => {
+    const res = [];
     if (obj.type === 'parent') {
-      const getChildren = formatter(obj.value);
-      const objName = `\n ${obj.name}: ${getChildren} \n}`;
-      result += objName;
+      const getChildren = formatter(obj.children);
+      res.push(`${obj.name}: {\n${getChildren}\n}`);
     } else if (obj.type === 'removed') {
-      result += `\n - ${obj.name} : ${formatValue(obj.value)}`;
+      res.push(`- ${obj.name}: ${formatValue(obj.value)}`);
     } else if (obj.type === 'added') {
-      result += `\n + ${obj.name} : ${formatValue(obj.value)}`;
+      res.push(`+ ${obj.name}: ${formatValue(obj.value)}`);
     } else if (obj.type === 'unchanged') {
-      result += `\n   ${obj.name} : ${formatValue(obj.value)}`;
+      res.push(`  ${obj.name}: ${formatValue(obj.value)}`);
     } else if (obj.type === 'updated') {
-      result += `\n + ${obj.name} : ${formatValue(obj.addedValue)}`;
-      result += `\n - ${obj.name} : ${formatValue(obj.removedValue)}`;
+      res.push(`+ ${obj.name}: ${formatValue(obj.addedValue)}
+      \n- ${obj.name}: ${formatValue(obj.removedValue)}`);
     }
-  }
-  const getWrapper = `{\n ${result} \n}`;
-  return getWrapper;
+    return res;
+  };
+  const mapped = tree.map((el) => formatType(el));
+  const joinMap = mapped.join('\n');
+  return `{\n${joinMap}\n}`;
 };
 export default formatter;

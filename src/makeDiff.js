@@ -24,7 +24,7 @@ const makeDiff = (obj1, obj2) => {
     } else if (obj1.hasOwnProperty(key) !== true) {
       result.push({ name: key, value: obj2[key], type: 'added' });
     } else if (typeof obj1[key] && typeof obj2[key] === 'object') {
-      result.push({ name: key, value: makeDiff(obj1[key], obj2[key]), type: 'parent' });
+      result.push({ name: key, children: makeDiff(obj1[key], obj2[key]), type: 'parent' });
     }
   }
   return result;

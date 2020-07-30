@@ -13,9 +13,8 @@ const genDiff = (file1, file2) => {
   const obj1 = runParser(getData1, path.extname(file1));
   const obj2 = runParser(getData2, path.extname(file2));
   const gendiffFile = makeDiff(obj1, obj2);
-  const renderFile = formatter(gendiffFile);
-  console.log(renderFile);
-  return renderFile;
+  console.log(formatter(gendiffFile));
+  return formatter(gendiffFile);
 };
 
 export default genDiff;
