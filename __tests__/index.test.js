@@ -36,3 +36,11 @@ test('tree', async () => {
   const diff = genDiff(before, after);
   expect(diff).toEqual(result);
 });
+
+test('plain', async () => {
+  const before = await readFile('file1.json');
+  const after = await readFile('file2.json');
+  const result = await readFile('plain.txt');
+  const diff = genDiff(before, after);
+  expect(diff).toEqual(result);
+});

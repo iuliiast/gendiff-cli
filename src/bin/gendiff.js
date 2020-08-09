@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import program from 'commander';
 import genDiff from '..';
 
@@ -9,6 +8,7 @@ program
   .arguments('<firstConfig> <secondConfig>')
   .description('Compares two configuration files and shows a difference.')
   .option('-f, --format [type]', 'output format', 'stylish')
+
   .action((before, after) => genDiff(before, after, program.format));
 
 program.parse(process.argv);

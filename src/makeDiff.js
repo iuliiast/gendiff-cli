@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 
-
 const makeDiff = (obj1, obj2) => {
   const key1 = Object.keys(obj1);
   const key2 = Object.keys(obj2);
