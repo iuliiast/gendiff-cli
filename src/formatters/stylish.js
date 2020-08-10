@@ -1,9 +1,12 @@
 const formatValue = (value, depth = 1) => {
   const makeIndent = () => '  '.repeat(depth);
-  let acc = '';
+  let acc = [];
   if (typeof value === 'object') {
-    const entries = Object.entries(value).flat();
-    acc += `{\n${makeIndent(depth + 1)}${entries[0]}: ${formatValue(entries[1])}\n${makeIndent(depth)}}`;
+    const keys = Object.keys(value);
+    keys.map((key) => {
+      depth += 1;
+      acc.push(`{\n${makeIndent(depth)}${key}: ${formatValue(value[key], depth + 1)}\n${makeIndent(depth)}}`);
+    });
   } else {
     acc += value;
   }
