@@ -9,7 +9,6 @@ const formatValue = (value) => {
 };
 
 const plainFormatter = (tree, pathStr) => {
-
   const makePath = (str) => {
     const result = [pathStr];
     result.push(str);

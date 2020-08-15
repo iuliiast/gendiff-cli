@@ -11,7 +11,6 @@ const formatValue = (value, depth = 1) => {
 
 const stylish = (tree, depth = 1) => {
   const makeIndent = () => '  '.repeat(depth);
-
   const formatType = (obj) => {
     if (obj.type === 'parent') {
       const getChildren = stylish(obj.children, depth + 1);
@@ -19,7 +18,7 @@ const stylish = (tree, depth = 1) => {
     } if (obj.type === 'added') {
       return `${makeIndent(depth)}+ ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
     } if (obj.type === 'removed') {
-      return`${makeIndent(depth)}- ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
+      return `${makeIndent(depth)}- ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
     } if (obj.type === 'unchanged') {
       return `${makeIndent(depth)}  ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
     } if (obj.type === 'updated') {
