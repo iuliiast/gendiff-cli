@@ -11,7 +11,8 @@ const formatValue = (value, depth = 1) => {
   return value;
 };
 
-const stylish = (tree, depth = 1) => {
+const stylish = (tree) => {
+  const depth = 1;
   const formatType = (obj) => {
     if (obj.type === 'parent') {
       const children = stylish(obj.children, depth + 1);
