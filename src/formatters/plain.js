@@ -8,7 +8,34 @@ const formatValue = (value) => {
   return value;
 };
 
-const plainFormatter = (tree, pathStr) => {
+const plainFormatter = (tree) => {
+  const makePath = (pathname) => {
+    const result = [];
+    result.push(pathname);
+    return result.join('.');
+  };
+
+  const formatType = (node) => {
+    const { name } = node;
+    if (node.type === 'parent') {
+      const children = plainFormatter(node.children, makePath(name));
+      return `${children}`;
+    } if (node.type === 'removed') {
+      return `Property '${makePath(name)}' was removed`;
+    } if (node.type === 'added') {
+      return `Property '${makePath(name)}' was added with value: ${formatValue(node.value)}`;
+    } if (node.type === 'updated') {
+      return `Property '${makePath(name)}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
+    }
+  };
+  const formattedNodes = tree.map((el) => formatType(el));
+  const result = formattedNodes.join('\n');
+  return result;
+};
+export default plainFormatter;
+
+
+/*
   const makePath = (str) => {
     const result = [pathStr];
     result.push(str);
@@ -17,24 +44,4 @@ const plainFormatter = (tree, pathStr) => {
     }
     return result.join('.');
   };
-
-  const formatType = (obj) => {
-    const { name } = obj;
-    const res = [];
-    if (obj.type === 'parent') {
-      const getChildren = plainFormatter(obj.children, makePath(name));
-      res.push(`${getChildren}`);
-    } else if (obj.type === 'removed') {
-      res.push(`Property '${makePath(name)}' was removed`);
-    } else if (obj.type === 'added') {
-      res.push(`Property '${makePath(name)}' was added with value: ${formatValue(obj.value)}`);
-    } else if (obj.type === 'updated') {
-      res.push(`Property '${makePath(name)}' was updated. From ${formatValue(obj.removedValue)} to ${formatValue(obj.addedValue)}`);
-    }
-    return res;
-  };
-  const mapped = tree.map((el) => formatType(el));
-  const joinMap = mapped.join('\n');
-  return joinMap;
-};
-export default plainFormatter;
+*/

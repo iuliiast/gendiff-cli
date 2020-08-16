@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import _ from 'lodash';
 
 const makeDiff = (obj1, obj2) => {

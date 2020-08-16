@@ -7,13 +7,13 @@ import makeDiff from './makeDiff';
 
 const readFile = (filename) => fs.readFileSync(path.resolve(process.cwd(), filename), 'utf-8');
 
-const genDiff = (filename1, filename2, defaultFormat) => {
-  const data1 = readFile(filename1);
-  const data2 = readFile(filename2);
-  const obj1 = runParser(data1, path.extname(filename1));
-  const obj2 = runParser(data2, path.extname(filename2));
+const genDiff = (filePath1, filePath2, format = 'stylish') => {
+  const data1 = readFile(filePath1);
+  const data2 = readFile(filePath2);
+  const obj1 = runParser(data1, path.extname(filePath1));
+  const obj2 = runParser(data2, path.extname(filePath2));
   const gendiffFile = makeDiff(obj1, obj2);
-  return formatter(gendiffFile, defaultFormat);
+  return formatter(gendiffFile, format);
 };
 
 export default genDiff;

@@ -1,3 +1,4 @@
+/*
 const formatValue = (value) => {
   let acc = '';
   if (typeof value === 'object') {
@@ -8,7 +9,12 @@ const formatValue = (value) => {
   }
   return acc;
 };
+*/
 
+const jsonFormatter = (tree) => JSON.stringify(tree, null, 2);
+export default jsonFormatter;
+
+/*
 const jsonFormatter = (tree) => {
   const formatType = (obj) => {
     const { name } = obj;
@@ -29,4 +35,4 @@ const jsonFormatter = (tree) => {
   const joinMap = mapped.join(',');
   return `[{${joinMap}}]`;
 };
-export default jsonFormatter;
+*/
