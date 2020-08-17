@@ -9,39 +9,27 @@ const formatValue = (value) => {
 };
 
 const plainFormatter = (tree) => {
-  const makePath = (pathname) => {
-    const result = [];
-    result.push(pathname);
-    return result.join('.');
-  };
+  const iter = (tree, paths = []) => {
+    const formatType = (node) => {
+      const newPaths = [...paths, node.name];
+      const fullPath = newPaths.join('.');
 
-  const formatType = (node) => {
-    const { name } = node;
-    if (node.type === 'parent') {
-      const children = plainFormatter(node.children, makePath(name));
-      return `${children}`;
-    } if (node.type === 'removed') {
-      return `Property '${makePath(name)}' was removed`;
-    } if (node.type === 'added') {
-      return `Property '${makePath(name)}' was added with value: ${formatValue(node.value)}`;
-    } if (node.type === 'updated') {
-      return `Property '${makePath(name)}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
-    }
+      if (node.type === 'parent') {
+        const children = iter(node.children, newPaths);
+        return `${children}`;
+      }
+      if (node.type === 'removed') {
+        return `Property '${fullPath}' was removed`;
+      } if (node.type === 'added') {
+        return `Property '${fullPath}' was added with value: ${formatValue(node.value)}`;
+      } if (node.type === 'updated') {
+        return `Property '${fullPath}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
+      }
+    };
+    const formattedNodes = tree.map((el) => formatType(el));
+    const result = formattedNodes.join('\n');
+    return result;
   };
-  const formattedNodes = tree.map((el) => formatType(el));
-  const result = formattedNodes.join('\n');
-  return result;
+  return iter(tree);
 };
 export default plainFormatter;
-
-
-/*
-  const makePath = (str) => {
-    const result = [pathStr];
-    result.push(str);
-    if (pathStr === '') {
-      return result.join('');
-    }
-    return result.join('.');
-  };
-*/

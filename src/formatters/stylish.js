@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import makeIndent from './utils';
+
+const makeIndent = (depth) => '  '.repeat(depth);
 
 const formatValue = (value, depth = 1) => {
   if (_.isObject(value)) {
