@@ -13,25 +13,26 @@ test('gendiff json', async () => {
   expect(diff).toEqual(result);
 });
 
-// test('gendiff yaml', async () => {
-//   const before = await readFile('before.yml');
-//   const after = await readFile('after.yml');
-//   const result = await readFile('result.txt');
-//   const diff = genDiff(before, after);
-//   expect(diff).toEqual(result);
-// });
+test('gendiff yaml', async () => {
+  const before = getFixturePath('file1.yml');
+  const after = getFixturePath('file2.yml');
+  const result = await readFile('result.txt');
+  const diff = genDiff(before, after);
+  expect(diff).toEqual(result);
+});
 
-// test('gendiff ini', async () => {
-//   const before = await readFile('before.ini');
-//   const after = await readFile('after.ini');
-//   const result = await readFile('result.txt');
-//   const diff = genDiff(before, after);
-//   expect(diff).toEqual(result);
-// });
+test('gendiff ini', async () => {
+  const before = getFixturePath('file1.ini');
+  const after = getFixturePath('file2.ini');
+  const result = await readFile('result.txt');
+  const diff = genDiff(before, after);
+  expect(diff).toEqual(result);
+});
 
-// test('plain', async () => {
-//   const before = await readFile('file1.json');
-//   const after = await readFile('file2.json');
-//   const result = await readFile('plain.txt');
-//   const diff = genDiff(before, after);
-//   expect(diff).toEqual(result);
+test('plain', async () => {
+  const before = getFixturePath('file1.json');
+  const after = getFixturePath('file2.json');
+  const result = await readFile('plain.txt');
+  const diff = genDiff(before, after, 'plain');
+  expect(diff).toEqual(result);
+});
