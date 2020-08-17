@@ -13,17 +13,22 @@ const plainFormatter = (tree) => {
     const formatType = (node) => {
       const newPaths = [...paths, node.name];
       const fullPath = newPaths.join('.');
-
-      if (node.type === 'parent') {
-        const children = iter(node.children, newPaths);
-        return `${children}`;
-      }
-      if (node.type === 'removed') {
-        return `Property '${fullPath}' was removed`;
-      } if (node.type === 'added') {
-        return `Property '${fullPath}' was added with value: ${formatValue(node.value)}`;
-      } if (node.type === 'updated') {
-        return `Property '${fullPath}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
+      switch (node.type) {
+        case 'parent': {
+          const children = iter(node.children, newPaths);
+          return `${children}`;
+        }
+        case 'removed': {
+          return `Property '${fullPath}' was removed`;
+        }
+        case 'added': {
+          return `Property '${fullPath}' was added with value: ${formatValue(node.value)}`;
+        }
+        case 'updated': {
+          return `Property '${fullPath}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
+        }
+        default:
+          return '';
       }
     };
     const formattedNodes = tree.map((el) => formatType(el));
