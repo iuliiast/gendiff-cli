@@ -4,34 +4,25 @@ import genDiff from '../src/index';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 let readFile;
-let result;
+let resultTree;
 let resultPlain;
 
 beforeAll(() => {
   readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-  result = readFile('resultTree.txt');
+  resultTree = readFile('tree.txt');
   resultPlain = readFile('plain.txt');
 });
 
-test('gendiff json', async () => {
-  const before = getFixturePath('file1.json');
-  const after = getFixturePath('file2.json');
-  const diff = genDiff(before, after);
-  expect(diff).toEqual(result);
-});
-
-test('gendiff yaml', async () => {
-  const before = getFixturePath('file1.yml');
-  const after = getFixturePath('file2.yml');
-  const diff = genDiff(before, after);
-  expect(diff).toEqual(result);
-});
-
-test('gendiff ini', async () => {
-  const before = getFixturePath('file1.ini');
-  const after = getFixturePath('file2.ini');
-  const diff = genDiff(before, after);
-  expect(diff).toEqual(result);
+describe('generate diff', () => {
+  test.each`
+    exs       | filename1       | filename2       | expectedOutput
+    ${'json'} | ${'file1.json'} | ${'file2.json'} | ${resultTree}
+    ${'yaml'} | ${'file1.yml'}  | ${'file2.yml'}  | ${resultTree}
+    ${'ini'}  | ${'file1.ini'}  | ${'file2.ini'}  | ${resultTree}
+  `('generate difference between $exs format files',
+  ({ filename1, filename2 }) => {
+    expect(genDiff(getFixturePath(filename1), getFixturePath(filename2))).toEqual(resultTree);
+  });
 });
 
 test('plain', async () => {
