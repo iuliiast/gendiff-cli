@@ -6,7 +6,7 @@ export default (filename, format) => {
     return JSON.parse(filename);
   } if (format === '.yml') {
     return yaml.safeLoad(filename);
-  } if (format === 'ini') {
+  } if (format === '.ini') {
     return ini.parse(filename);
   }
   return Error('Unknown format');
