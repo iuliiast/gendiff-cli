@@ -9,5 +9,5 @@ export default (filename, format) => {
   } if (format === 'json') {
     return JSON.stringify(filename);
   }
-  return Error('Unknown format');
+  throw Error(`Unknown format: ${format}`);
 };

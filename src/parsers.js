@@ -9,5 +9,5 @@ export default (filename, format) => {
   } if (format === '.ini') {
     return ini.parse(filename);
   }
-  return Error('Unknown format');
+  throw Error(`Unknown format: ${format}`);
 };

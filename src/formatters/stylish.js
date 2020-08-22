@@ -13,30 +13,30 @@ const formatValue = (value, depth = 1) => {
 };
 
 const stylish = (tree) => {
-  const iter = (tree, depth = 1) => {
-    const formatType = (obj) => {
-      switch (obj.type) {
+  const iter = (diff, depth = 1) => {
+    const getFormattedNode = (node) => {
+      switch (node.type) {
         case 'parent': {
-          const children = iter(obj.children, depth + 1);
-          return `${makeIndent(depth + 1)}${obj.name}: ${children}`;
+          const children = iter(node.children, depth + 1);
+          return `${makeIndent(depth + 1)}${node.name}: ${children}`;
         }
         case 'added': {
-          return `${makeIndent(depth)}+ ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
+          return `${makeIndent(depth)}+ ${node.name}: ${formatValue(node.value, depth + 1)}`;
         }
         case 'removed': {
-          return `${makeIndent(depth)}- ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
+          return `${makeIndent(depth)}- ${node.name}: ${formatValue(node.value, depth + 1)}`;
         }
         case 'unchanged': {
-          return `${makeIndent(depth)}  ${obj.name}: ${formatValue(obj.value, depth + 1)}`;
+          return `${makeIndent(depth)}  ${node.name}: ${formatValue(node.value, depth + 1)}`;
         }
         case 'updated': {
-          return `${makeIndent(depth)}- ${obj.name}: ${formatValue(obj.removedValue, depth + 1)}\n${makeIndent(depth)}+ ${obj.name}: ${formatValue(obj.addedValue, depth + 1)}`;
+          return `${makeIndent(depth)}- ${node.name}: ${formatValue(node.removedValue, depth + 1)}\n${makeIndent(depth)}+ ${node.name}: ${formatValue(node.addedValue, depth + 1)}`;
         }
         default:
-          return 'Error with stylish';
+          throw Error(node.type);
       }
     };
-    const formattedNodes = tree.map((el) => formatType(el));
+    const formattedNodes = diff.map((el) => getFormattedNode(el));
     const result = formattedNodes.join('\n');
     return `{\n${result}\n${makeIndent(depth - 1)}}`;
   };

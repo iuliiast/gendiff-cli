@@ -10,13 +10,13 @@ const formatValue = (value) => {
 
 const plainFormatter = (tree) => {
   const iter = (tree, paths = []) => {
-    const formatType = (node) => {
+    const getFormattedNode = (node) => {
       const newPaths = [...paths, node.name];
       const fullPath = newPaths.join('.');
       switch (node.type) {
         case 'parent': {
           const children = iter(node.children, newPaths);
-          return `${children}`;
+          return children;
         }
         case 'removed': {
           return `Property '${fullPath}' was removed`;
@@ -31,7 +31,7 @@ const plainFormatter = (tree) => {
           return '';
       }
     };
-    const formattedNodes = tree.map((el) => formatType(el));
+    const formattedNodes = tree.map((el) => getFormattedNode(el));
     const result = formattedNodes.join('\n');
     return result;
   };
