@@ -9,7 +9,7 @@ const formatValue = (value) => {
 };
 
 const plainFormatter = (tree) => {
-  const iter = (tree, paths = []) => {
+  const iter = (diff, paths = []) => {
     const getFormattedNode = (node) => {
       const newPaths = [...paths, node.name];
       const fullPath = newPaths.join('.');
@@ -28,10 +28,11 @@ const plainFormatter = (tree) => {
           return `Property '${fullPath}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
         }
         default:
-          return '';
+          return '!';
       }
     };
-    const formattedNodes = tree.map((el) => getFormattedNode(el));
+    const formattedNodes = diff.filter((el) => el.type !== 'unchanged')
+      .map((el) => getFormattedNode(el));
     const result = formattedNodes.join('\n');
     return result;
   };
