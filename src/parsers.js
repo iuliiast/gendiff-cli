@@ -11,9 +11,9 @@ export default (filename, format) => {
   }
   if (format === '.ini') {
     const parsed = ini.parse(filename);
-    const isNumeric = (value) => { 
-      const number = parseFloat(value); 
-      return !Number.isNaN(number); 
+    const isNumeric = (value) => {
+      const number = parseFloat(value);
+      return !Number.isNaN(number);
     };
     const numberifyValue = (obj) => {
       const keys = Object.keys(obj);
