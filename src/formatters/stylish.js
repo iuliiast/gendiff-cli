@@ -12,13 +12,13 @@ const formatValue = (value, depth = 1) => {
   return value;
 };
 
-const stylish = (tree) => {
+const buildNested = (tree) => {
   const iter = (diff, depth = 1) => {
     const getFormattedNode = (node) => {
       switch (node.type) {
         case 'parent': {
-          const children = iter(node.children, depth + 2);
-          return `${makeIndent(depth + 1)}${node.name}: ${children}`;
+          const nested = iter(node.children, depth + 2);
+          return `${makeIndent(depth + 1)}${node.name}: ${nested}`;
         }
         case 'added': {
           return `${makeIndent(depth)}+ ${node.name}: ${formatValue(node.value, depth + 1)}`;
@@ -33,7 +33,7 @@ const stylish = (tree) => {
           return `${makeIndent(depth)}- ${node.name}: ${formatValue(node.removedValue, depth + 1)}\n${makeIndent(depth)}+ ${node.name}: ${formatValue(node.addedValue, depth + 1)}`;
         }
         default:
-          throw Error(node.type);
+          throw Error(`Unknown type: ${node.type}`);
       }
     };
     const formattedNodes = diff.map((el) => getFormattedNode(el));
@@ -42,4 +42,4 @@ const stylish = (tree) => {
   };
   return iter(tree);
 };
-export default stylish;
+export default buildNested;

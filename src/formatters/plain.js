@@ -8,15 +8,15 @@ const formatValue = (value) => {
   return value;
 };
 
-const plainFormatter = (tree) => {
+const buildPlain = (tree) => {
   const iter = (diff, paths = []) => {
     const getFormattedNode = (node) => {
       const newPaths = [...paths, node.name];
       const fullPath = newPaths.join('.');
       switch (node.type) {
         case 'parent': {
-          const children = iter(node.children, newPaths);
-          return children;
+          const nested = iter(node.children, newPaths);
+          return nested;
         }
         case 'removed': {
           return `Property '${fullPath}' was removed`;
@@ -28,7 +28,7 @@ const plainFormatter = (tree) => {
           return `Property '${fullPath}' was updated. From ${formatValue(node.removedValue)} to ${formatValue(node.addedValue)}`;
         }
         default:
-          return '!';
+          throw Error(`Unknown type: ${node.type}`);
       }
     };
     const formattedNodes = diff.filter((el) => el.type !== 'unchanged')
@@ -38,4 +38,4 @@ const plainFormatter = (tree) => {
   };
   return iter(tree);
 };
-export default plainFormatter;
+export default buildPlain;

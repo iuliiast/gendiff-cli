@@ -1,13 +1,15 @@
 import stylish from './stylish';
 import plainFormatter from './plain';
 
-export default (filename, format) => {
+export default (diff, format) => {
   if (format === 'stylish') {
-    return stylish(filename);
-  } if (format === 'plain') {
-    return plainFormatter(filename);
-  } if (format === 'json') {
-    return JSON.stringify(filename);
+    return stylish(diff);
+  }
+  if (format === 'plain') {
+    return plainFormatter(diff);
+  }
+  if (format === 'json') {
+    return JSON.stringify(diff);
   }
   throw Error(`Unknown format: ${format}`);
 };

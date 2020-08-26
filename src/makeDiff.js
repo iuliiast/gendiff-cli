@@ -5,7 +5,7 @@ const makeDiff = (obj1, obj2) => {
   const keys2 = Object.keys(obj2);
   const keys = _.union(keys1, keys2);
 
-  const createDiff = (key) => {
+  const buildNode = (key) => {
     if (!_.has(obj2, key)) {
       return { name: key, value: obj1[key], type: 'removed' };
     }
@@ -22,7 +22,7 @@ const makeDiff = (obj1, obj2) => {
       name: key, addedValue: obj2[key], removedValue: obj1[key], type: 'updated',
     };
   };
-  const formattedNodes = keys.map((key) => createDiff(key));
-  return formattedNodes;
+  const diff = keys.map((key) => buildNode(key));
+  return diff;
 };
 export default makeDiff;
