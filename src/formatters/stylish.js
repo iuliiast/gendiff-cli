@@ -12,7 +12,7 @@ const formatValue = (value, depth = 1) => {
   return value;
 };
 
-const buildNested = (tree) => {
+const buildStylish = (tree) => {
   const iter = (diff, depth = 1) => {
     const getFormattedNode = (node) => {
       switch (node.type) {
@@ -42,4 +42,4 @@ const buildNested = (tree) => {
   };
   return iter(tree);
 };
-export default buildNested;
+export default buildStylish;
