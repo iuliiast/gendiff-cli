@@ -16,7 +16,9 @@ beforeAll(() => {
 
 const extensionsList = ['json', 'yml', 'ini'];
 test.each(extensionsList)('generate diff %s', (extension) => {
-  expect(genDiff(getFixturePath(`file1.${extension}`), getFixturePath(`file2.${extension}`), 'stylish')).toEqual(resultTree);
-  expect(genDiff(getFixturePath(`file1.${extension}`), getFixturePath(`file2.${extension}`), 'plain')).toEqual(resultPlain);
-  expect(genDiff(getFixturePath(`file1.${extension}`), getFixturePath(`file2.${extension}`), 'json')).toEqual(resultJson);
+  const before = getFixturePath(`file1.${extension}`);
+  const after = getFixturePath(`file2.${extension}`);
+  expect(genDiff(before, after, 'stylish')).toEqual(resultTree);
+  expect(genDiff(before, after, 'plain')).toEqual(resultPlain);
+  expect(genDiff(before, after, 'json')).toEqual(resultJson);
 });
