@@ -3,13 +3,13 @@ import _ from 'lodash';
 const makeIndent = (depth) => '  '.repeat(depth);
 
 const formatValue = (value, depth = 1) => {
-  if (_.isObject(value)) {
-    const keys = Object.keys(value);
-    const formattedKeys = keys.map((key) => `${key}: ${formatValue(value[key], depth + 2)}`);
-    const result = formattedKeys.join(`\n${makeIndent(depth + 2)}`);
-    return `{\n${makeIndent(depth + 2)}${result}\n${makeIndent(depth)}}`;
+  if (!_.isObject(value)) {
+    return value;
   }
-  return value;
+  const keys = Object.keys(value);
+  const formattedKeys = keys.map((key) => `${key}: ${formatValue(value[key], depth + 2)}`);
+  const result = formattedKeys.join(`\n${makeIndent(depth + 2)}`);
+  return `{\n${makeIndent(depth + 2)}${result}\n${makeIndent(depth)}}`;  
 };
 
 const buildStylish = (tree) => {
