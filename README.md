@@ -23,15 +23,15 @@ $ npm link
 
 ## Examples
 
-<h4>Comparison of JSON files</h4>
+<h4>Comparison of two JSON files</h4>
 
 [![asciicast](https://asciinema.org/a/Bz0TdXxS5xT6fj8mBGIDPCAba.svg)](https://asciinema.org/a/Bz0TdXxS5xT6fj8mBGIDPCAba)
 
-<h4>Comparison of YAML files</h4>
+<h4>Comparison of two YAML files</h4>
 
 [![asciicast](https://asciinema.org/a/DQOc3guh7eKnMxth52WeME1ud.svg)](https://asciinema.org/a/DQOc3guh7eKnMxth52WeME1ud)
 
-<h4>Comparison of INI files</h4>
+<h4>Comparison of two INI files</h4>
 
 [![asciicast](https://asciinema.org/a/OwF2GL4FT1mUfQAKk6STeXRFU.svg)](https://asciinema.org/a/OwF2GL4FT1mUfQAKk6STeXRFU)
 
