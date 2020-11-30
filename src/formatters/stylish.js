@@ -9,7 +9,7 @@ const formatValue = (value, depth = 1) => {
   const keys = Object.keys(value);
   const formattedKeys = keys.map((key) => `${key}: ${formatValue(value[key], depth + 2)}`);
   const result = formattedKeys.join(`\n${makeIndent(depth + 2)}`);
-  return `{\n${makeIndent(depth + 2)}${result}\n${makeIndent(depth)}}`;  
+  return `{\n${makeIndent(depth + 2)}${result}\n${makeIndent(depth)}}`;
 };
 
 const buildStylish = (tree) => {
