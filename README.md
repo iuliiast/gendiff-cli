@@ -1,12 +1,27 @@
-# frontend-project-lvl2 [![Maintainability](https://api.codeclimate.com/v1/badges/9edd8f049ba62f844dfe/maintainability)](https://codeclimate.com/github/yuliabeton/frontend-project-lvl2/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/9edd8f049ba62f844dfe/test_coverage)](https://codeclimate.com/github/yuliabeton/frontend-project-lvl2/test_coverage) ![CI](https://github.com/yuliabeton/frontend-project-lvl2/workflows/CI/badge.svg)
+# Gendiff [![Maintainability](https://api.codeclimate.com/v1/badges/9edd8f049ba62f844dfe/maintainability)](https://codeclimate.com/github/yuliabeton/frontend-project-lvl2/maintainability) ![CI](https://github.com/yuliabeton/frontend-project-lvl2/workflows/CI/badge.svg)
 
-<h4>CLI compares two configuration files and shows a difference.</h4>
-<p>Usage: gendiff [options] firstConfig secondConfig<p>
-<p>Options:<br>
+### CLI compares two configuration files and shows a difference
+
+**Supported formats: JSON, YAML, INI**
+
+### Install
+* Clone this repository
+* Install NVM and Node.js
+* Run these commands
+```
+$ make install
+$ make publish
+$ npm link
+```
+### Usage
+
+<code>gendiff [options] firstConfig secondConfig</code>
+
+**Options:**<br>
 <code>  -f, --format [type]  output format (default: "stylish")</code><br>
-<code>     -h, --help           display help for command</code></p>
+<code>     -h, --help           display help for command</code>
 
-[![asciicast](https://asciinema.org/a/ohd1jktOk3gSUebM606iO00op.svg)](https://asciinema.org/a/ohd1jktOk3gSUebM606iO00op)
+## Examples
 
 <h4>Comparison of JSON files</h4>
 
@@ -20,10 +35,10 @@
 
 [![asciicast](https://asciinema.org/a/OwF2GL4FT1mUfQAKk6STeXRFU.svg)](https://asciinema.org/a/OwF2GL4FT1mUfQAKk6STeXRFU)
 
-<h4>Plain format</h4>
+<h4>Plain format output</h4>
 
 [![asciicast](https://asciinema.org/a/x9rdJh4XS0W3bmVqAFbASBf23.svg)](https://asciinema.org/a/x9rdJh4XS0W3bmVqAFbASBf23)
 
-<h4>JSON format</h4>
+<h4>JSON format output</h4>
 
 [![asciicast](https://asciinema.org/a/tHcw0TqUOtHPnMMAyaI5wiL5r.svg)](https://asciinema.org/a/tHcw0TqUOtHPnMMAyaI5wiL5r)
